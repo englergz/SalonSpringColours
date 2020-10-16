@@ -1,0 +1,59 @@
+
+<?php
+    include_once "../class/base_de_datos.php";
+  
+?>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+        <meta name='viewport' content='width=device-width, initial-scale=1'>
+        <link rel="icon" type="image/png" href="../img/icons/logo.ico" />
+        <link rel="stylesheet" href="../css/bootstrap.min.css">
+        <link rel="stylesheet" href="../css/main.css">
+        <script src="./js/jquery-3.3.1.slim.min.js"></script>
+        <script src='./js/jquery-3.5.1.min.js'></script>
+        <script src="./js/popper.min.js"></script>
+        <script src="./js/bootstrap.min.js"></script>
+    </head>
+    <body>
+    <br/><br/>
+    <div class="table-responsive">
+        <table class="table table-striped table-dark">
+            <thead>
+                <tr class="bg-danger">
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Celular</th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Hora</th>
+                </tr>
+            </thead>
+            <tbody>                    
+                <?php        
+
+                    $sentecia = $base_de_datos->prepare("SELECT * FROM public.agenda ORDER BY id DESC LIMIT 1;");
+                            
+                    try {
+                        $sentecia->execute();
+                        $res = $sentecia->fetchAll(PDO::FETCH_OBJ);  
+                        
+                        for ($i=0; $i < sizeof($res); $i++) { 
+
+                            echo "<tr>";
+                            echo "<td>".$res[$i]->nombre."</td>";
+                            echo "<td>".$res[$i]->email."</td>";
+                            echo "<td>".$res[$i]->celular."</td>";
+                            echo "<td>".$res[$i]->fecha."</td>";
+                            echo "<td>".$res[$i]->hora."</td>";
+                            echo "</tr>";  
+                        }
+                    }
+                    catch(Exception $e){
+                        
+                    }   
+                ?>
+            </tbody>
+        </table>                
+    </div>
+    
